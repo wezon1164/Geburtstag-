@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Alles Gute zum Geburtstag, Mama ❤️ + Mini-Game</title>
+  <title>Alles Gute zum Geburtstag, Mama ❤️ + Mini-Games</title>
   <style>
     body {
       margin: 0;
@@ -31,7 +31,7 @@
     audio {
       margin-top: 20px;
     }
-    /* Mini-Game Styles */
+    /* Clicker Game Styles */
     #game {
       margin-top: 50px;
       background: rgba(255, 255, 255, 0.7);
@@ -74,6 +74,38 @@
       color: #6f1d3f;
       min-height: 40px;
     }
+    /* Hearts Game Styles */
+    #heartsGameContainer {
+      margin: 60px auto 30px auto;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      max-width: 420px;
+      box-shadow: 0 0 15px #d6336c;
+      padding: 20px;
+    }
+    #heartsGameContainer h2 {
+      color: #d6336c;
+      margin-bottom: 15px;
+      font-size: 2em;
+    }
+    canvas {
+      background: #fff0f2;
+      display: block;
+      margin: 0 auto;
+      border-radius: 15px;
+      box-shadow: 0 0 10px #d6336c;
+    }
+    #heartsScore {
+      font-size: 1.5em;
+      margin-top: 15px;
+      color: #6f1d3f;
+      font-weight: bold;
+    }
+    #instructions {
+      font-size: 1em;
+      color: #a64a71;
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -88,7 +120,7 @@
     <source src="https://cdn.pixabay.com/audio/2023/05/23/audio_b3ad84f865.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Mini-Game Section -->
+  <!-- Clicker Mini-Game -->
   <div id="game">
     <h2>Clicker Mini-Game für Mama 🎮</h2>
     <p>Klicke so oft du kannst in 10 Sekunden!</p>
@@ -98,7 +130,16 @@
     <div id="message"></div>
   </div>
 
+  <!-- Hearts Shake.io-Style Game -->
+  <div id="heartsGameContainer">
+    <h2>Herzen Sammel-Spiel ❤️</h2>
+    <p id="instructions">Steuere den Kasten mit Pfeil links/rechts und sammle Herzen ein!</p>
+    <canvas id="heartsGame" width="400" height="300"></canvas>
+    <div id="heartsScore">Herzen gesammelt: 0</div>
+  </div>
+
   <script>
+    // Clicker Game Code
     const button = document.getElementById('clickButton');
     const scoreDisplay = document.getElementById('score');
     const timerDisplay = document.getElementById('timer');
@@ -109,7 +150,7 @@
     let gameActive = false;
     let timerInterval;
 
-    function startGame() {
+    function startClickerGame() {
       score = 0;
       timeLeft = 10;
       scoreDisplay.textContent = 'Punkte: 0';
@@ -133,11 +174,123 @@
 
     button.addEventListener('click', () => {
       if (!gameActive) {
-        startGame();
+        startClickerGame();
       }
       score++;
       scoreDisplay.textContent = `Punkte: ${score}`;
     });
+
+    // Hearts Shake.io-Style Game Code
+    const canvas = document.getElementById('heartsGame');
+    const ctx = canvas.getContext('2d');
+
+    const player = {
+      x: canvas.width / 2 - 25,
+      y: canvas.height - 40,
+      width: 50,
+      height: 20,
+      speed: 7,
+      dx: 0,
+    };
+
+    const heartImg = new Image();
+    heartImg.src = 'https://i.postimg.cc/7Y6ZVrrY/heart.png'; // cute heart icon (transparent)
+
+    let hearts = [];
+    let heartsCollected = 0;
+    let heartsSpeed = 3;
+    let gameRunning = true;
+
+    function createHeart() {
+      const x = Math.random() * (canvas.width - 30);
+      hearts.push({ x, y: -30, size: 30 });
+    }
+
+    function drawPlayer() {
+      ctx.fillStyle = '#d6336c';
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+    }
+
+    function drawHearts() {
+      hearts.forEach(h => {
+        if (heartImg.complete) {
+          ctx.drawImage(heartImg, h.x, h.y, h.size, h.size);
+        } else {
+          ctx.fillStyle = 'red';
+          ctx.beginPath();
+          ctx.arc(h.x + h.size / 2, h.y + h.size / 2, h.size / 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+    }
+
+    function movePlayer() {
+      player.x += player.dx;
+      // Grenzen prüfen
+      if (player.x < 0) player.x = 0;
+      if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+    }
+
+    function moveHearts() {
+      hearts.forEach(h => h.y += heartsSpeed);
+      // Herzen, die unten raus sind, entfernen
+      hearts = hearts.filter(h => h.y < canvas.height + 30);
+    }
+
+    function checkCollision() {
+      hearts.forEach((h, index) => {
+        if (
+          h.x < player.x + player.width &&
+          h.x + h.size > player.x &&
+          h.y < player.y + player.height &&
+          h.y + h.size > player.y
+        ) {
+          hearts.splice(index, 1);
+          heartsCollected++;
+          document.getElementById('heartsScore').textContent = `Herzen gesammelt: ${heartsCollected}`;
+        }
+      });
+    }
+
+    function clear() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function update() {
+      if (!gameRunning) return;
+
+      clear();
+      drawPlayer();
+      drawHearts();
+      movePlayer();
+      moveHearts();
+      checkCollision();
+
+      requestAnimationFrame(update);
+    }
+
+    // Steuern mit Pfeiltasten
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') {
+        player.dx = player.speed;
+      } else if (e.key === 'ArrowLeft') {
+        player.dx = -player.speed;
+      }
+    });
+
+    document.addEventListener('keyup', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        player.dx = 0;
+      }
+    });
+
+    // Neue Herzen alle 1.2 Sekunden spawnen
+    setInterval(() => {
+      if (gameRunning) createHeart();
+    }, 1200);
+
+    // Starten
+    update();
   </script>
 </body>
 </html>
