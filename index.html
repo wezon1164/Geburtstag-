@@ -2,88 +2,142 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Easy Mini Game für Mama 🎮</title>
+  <title>Alles Gute zum Geburtstag, Mama ❤️ + Mini-Game</title>
   <style>
     body {
-      background: #ffe4e1;
-      font-family: Arial, sans-serif;
-      color: #d6336c;
+      margin: 0;
+      padding: 50px 20px;
+      background: linear-gradient(to right, #fcb69f, #ffecd2);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: #333;
       text-align: center;
-      padding: 40px;
     }
     h1 {
-      font-size: 2.5em;
+      font-size: 3em;
+      color: #d6336c;
       margin-bottom: 10px;
     }
     p {
-      font-size: 1.2em;
-      margin-bottom: 20px;
+      font-size: 1.5em;
+      margin-top: 0;
+      margin-bottom: 30px;
     }
-    input[type=number] {
-      padding: 8px;
-      font-size: 1.2em;
-      width: 80px;
-      border: 2px solid #d6336c;
-      border-radius: 5px;
-      text-align: center;
+    img {
+      margin-top: 20px;
+      width: 250px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #d6336c;
     }
-    button {
-      padding: 8px 15px;
-      font-size: 1.2em;
-      margin-left: 10px;
+    audio {
+      margin-top: 20px;
+    }
+    /* Mini-Game Styles */
+    #game {
+      margin-top: 50px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px #d6336c;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #game h2 {
+      color: #d6336c;
+      margin-bottom: 15px;
+      font-size: 2em;
+    }
+    #clickButton {
+      padding: 20px 40px;
+      font-size: 1.8em;
       background-color: #d6336c;
       border: none;
-      border-radius: 5px;
+      border-radius: 15px;
       color: white;
       cursor: pointer;
+      user-select: none;
+      box-shadow: 0 5px 15px #b12a58;
       transition: background-color 0.3s;
     }
-    button:hover {
+    #clickButton:hover {
       background-color: #a5294a;
     }
-    #result {
+    #score, #timer {
+      font-size: 1.6em;
       margin-top: 20px;
+      font-weight: bold;
+      color: #6f1d3f;
+    }
+    #message {
+      margin-top: 30px;
       font-size: 1.4em;
+      color: #6f1d3f;
       min-height: 40px;
     }
   </style>
 </head>
 <body>
-  <h1>Rate die Zahl, Mama!</h1>
-  <p>Ich hab eine Zahl von 1 bis 20 im Kopf. Versuch’s mal!</p>
+  <h1>🎉 Alles Gute zum 45ten Geburtstag, Mama! 🎉</h1>
+  <p>Danke, dass du immer für mich da bist.<br>
+  Wir lieben dich unendlich und wünschen dir einen wunderschönen Geburtstag! 💐<br>
+  Du bist die Beste – für immer! ❤️</p>
 
-  <input type="number" id="guess" min="1" max="20" placeholder="Dein Tipp" />
-  <button onclick="checkGuess()">Los!</button>
+  <img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="Happy Birthday GIF" />
 
-  <div id="result"></div>
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2023/05/23/audio_b3ad84f865.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Mini-Game Section -->
+  <div id="game">
+    <h2>Clicker Mini-Game für Mama 🎮</h2>
+    <p>Klicke so oft du kannst in 10 Sekunden!</p>
+    <button id="clickButton">Klick mich!</button>
+    <div id="score">Punkte: 0</div>
+    <div id="timer">Zeit: 10 Sekunden</div>
+    <div id="message"></div>
+  </div>
 
   <script>
-    const secretNumber = Math.floor(Math.random() * 20) + 1;
-    let attempts = 0;
+    const button = document.getElementById('clickButton');
+    const scoreDisplay = document.getElementById('score');
+    const timerDisplay = document.getElementById('timer');
+    const message = document.getElementById('message');
 
-    function checkGuess() {
-      const guessInput = document.getElementById('guess');
-      const result = document.getElementById('result');
-      const guess = Number(guessInput.value);
-      attempts++;
+    let score = 0;
+    let timeLeft = 10;
+    let gameActive = false;
+    let timerInterval;
 
-      if (!guess || guess < 1 || guess > 20) {
-        result.textContent = 'Bitte Zahl zwischen 1 und 20 eingeben.';
-        return;
-      }
+    function startGame() {
+      score = 0;
+      timeLeft = 10;
+      scoreDisplay.textContent = 'Punkte: 0';
+      timerDisplay.textContent = 'Zeit: 10 Sekunden';
+      message.textContent = '';
+      button.disabled = false;
+      gameActive = true;
 
-      if (guess === secretNumber) {
-        result.textContent = `🎉 Richtig! Du hast es in ${attempts} Versuchen geschafft! ❤️`;
-        guessInput.disabled = true;
-      } else if (guess < secretNumber) {
-        result.textContent = 'Zu niedrig, nochmal!';
-      } else {
-        result.textContent = 'Zu hoch, versuch’s nochmal!';
-      }
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `Zeit: ${timeLeft} Sekunden`;
 
-      guessInput.value = '';
-      guessInput.focus();
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          gameActive = false;
+          button.disabled = true;
+          message.textContent = `Zeit ist vorbei! Du hast ${score} Klicks geschafft! 🎉`;
+        }
+      }, 1000);
     }
+
+    button.addEventListener('click', () => {
+      if (!gameActive) {
+        startGame();
+      }
+      score++;
+      scoreDisplay.textContent = `Punkte: ${score}`;
+    });
   </script>
 </body>
 </html>
