@@ -2,164 +2,87 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Mini Game für Mama 🎮🔥</title>
+  <title>Easy Mini Game für Mama 🎮</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
-
     body {
-      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-      font-family: 'Permanent Marker', cursive, sans-serif;
-      color: #fff;
+      background: #ffe4e1;
+      font-family: Arial, sans-serif;
+      color: #d6336c;
       text-align: center;
-      padding: 50px 20px;
-      overflow-x: hidden;
-      user-select: none;
+      padding: 40px;
     }
     h1 {
-      font-size: 3em;
-      text-shadow: 2px 2px 8px #b11f47;
+      font-size: 2.5em;
       margin-bottom: 10px;
     }
     p {
-      font-size: 1.4em;
-      margin-bottom: 30px;
-      text-shadow: 1px 1px 5px #9b1b3f;
-    }
-    #game {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 30px;
-      border-radius: 25px;
-      box-shadow: 0 0 20px #b11f47;
-      max-width: 400px;
-      margin: 0 auto;
-      position: relative;
+      font-size: 1.2em;
+      margin-bottom: 20px;
     }
     input[type=number] {
-      padding: 15px;
-      font-size: 1.3em;
-      border-radius: 12px;
-      border: none;
-      width: 120px;
+      padding: 8px;
+      font-size: 1.2em;
+      width: 80px;
+      border: 2px solid #d6336c;
+      border-radius: 5px;
       text-align: center;
-      margin-right: 15px;
-      box-shadow: 0 0 10px #ff6584;
-      transition: box-shadow 0.3s ease;
-    }
-    input[type=number]:focus {
-      outline: none;
-      box-shadow: 0 0 20px #ff2a6c;
     }
     button {
-      padding: 15px 30px;
-      font-size: 1.3em;
-      border-radius: 12px;
+      padding: 8px 15px;
+      font-size: 1.2em;
+      margin-left: 10px;
+      background-color: #d6336c;
       border: none;
-      background: #ff2a6c;
+      border-radius: 5px;
       color: white;
       cursor: pointer;
-      box-shadow: 0 5px 15px #ff2a6c;
-      transition: background 0.4s ease, box-shadow 0.4s ease;
-      font-weight: bold;
-      user-select: none;
+      transition: background-color 0.3s;
     }
     button:hover {
-      background: #d12a5c;
-      box-shadow: 0 8px 25px #d12a5c;
+      background-color: #a5294a;
     }
     #result {
-      margin-top: 30px;
-      font-size: 1.8em;
-      min-height: 60px;
-      text-shadow: 1px 1px 8px #9b1b3f;
-      transition: opacity 0.5s ease;
-    }
-    /* Fun Confetti Animation */
-    .confetti {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background-color: #ff2a6c;
-      opacity: 0.8;
-      top: 0;
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      z-index: 9999;
-      border-radius: 3px;
-    }
-    @keyframes fall {
-      0% {
-        transform: translateY(-10px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
+      margin-top: 20px;
+      font-size: 1.4em;
+      min-height: 40px;
     }
   </style>
 </head>
 <body>
-  <h1>🎉 Rate die Zahl, Mama! 🎉</h1>
-  <p>Ich denke mir eine Zahl von 1 bis 20 aus. Versuch sie zu erraten!</p>
-  <div id="game">
-    <input type="number" id="guess" min="1" max="20" placeholder="Dein Tipp" />
-    <button onclick="checkGuess()">Rate!</button>
-    <div id="result"></div>
-  </div>
+  <h1>Rate die Zahl, Mama!</h1>
+  <p>Ich hab eine Zahl von 1 bis 20 im Kopf. Versuch’s mal!</p>
 
-  <audio id="winSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3e0b2f0a87.mp3?filename=game-win-arcade-6435.mp3" preload="auto"></audio>
-  <audio id="failSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_015b4e3cc0.mp3?filename=error-126467.mp3" preload="auto"></audio>
+  <input type="number" id="guess" min="1" max="20" placeholder="Dein Tipp" />
+  <button onclick="checkGuess()">Los!</button>
+
+  <div id="result"></div>
 
   <script>
     const secretNumber = Math.floor(Math.random() * 20) + 1;
     let attempts = 0;
-    const result = document.getElementById('result');
-    const winSound = document.getElementById('winSound');
-    const failSound = document.getElementById('failSound');
-    const guessInput = document.getElementById('guess');
 
     function checkGuess() {
+      const guessInput = document.getElementById('guess');
+      const result = document.getElementById('result');
       const guess = Number(guessInput.value);
       attempts++;
 
       if (!guess || guess < 1 || guess > 20) {
-        result.textContent = 'Bitte gib eine Zahl zwischen 1 und 20 ein!';
-        failSound.play();
+        result.textContent = 'Bitte Zahl zwischen 1 und 20 eingeben.';
         return;
       }
 
       if (guess === secretNumber) {
-        result.textContent = `🎉 YAY! Du hast es in ${attempts} Versuchen erraten! Du bist die Beste, Mama! ❤️`;
-        winSound.play();
+        result.textContent = `🎉 Richtig! Du hast es in ${attempts} Versuchen geschafft! ❤️`;
         guessInput.disabled = true;
-        createConfetti();
       } else if (guess < secretNumber) {
-        result.textContent = 'Zu niedrig, versuch’s nochmal!';
-        failSound.play();
+        result.textContent = 'Zu niedrig, nochmal!';
       } else {
-        result.textContent = 'Zu hoch, nochmal probieren!';
-        failSound.play();
+        result.textContent = 'Zu hoch, versuch’s nochmal!';
       }
 
       guessInput.value = '';
       guessInput.focus();
-    }
-
-    function createConfetti() {
-      for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement('div');
-        confetti.classList.add('confetti');
-        confetti.style.left = Math.random() * window.innerWidth + 'px';
-        confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
-        confetti.style.width = confetti.style.height = (Math.random() * 8 + 4) + 'px';
-        document.body.appendChild(confetti);
-
-        setTimeout(() => {
-          confetti.remove();
-        }, 5000);
-      }
     }
   </script>
 </body>
