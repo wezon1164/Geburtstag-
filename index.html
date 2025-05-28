@@ -2,127 +2,133 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Alles Gute zum Geburtstag, Mama ❤️ + Mini-Games</title>
   <style>
+    :root {
+      --pink: #d6336c;
+      --rose: #ffccd5;
+      --dark-pink: #6f1d3f;
+      --shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
+    }
+
     body {
       margin: 0;
-      padding: 50px 20px;
+      padding: 2rem 1rem;
       background: linear-gradient(to right, #fcb69f, #ffecd2);
       font-family: 'Comic Sans MS', cursive, sans-serif;
       color: #333;
       text-align: center;
     }
+
     h1 {
-      font-size: 3em;
-      color: #d6336c;
-      margin-bottom: 10px;
+      font-size: 2.5rem;
+      color: var(--pink);
+      margin-bottom: 0.5rem;
     }
+
     p {
-      font-size: 1.5em;
-      margin-top: 0;
-      margin-bottom: 30px;
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
     }
+
     img {
-      margin-top: 20px;
-      width: 250px;
+      width: 220px;
+      margin: 1rem auto;
       border-radius: 15px;
-      box-shadow: 0 0 20px #d6336c;
+      box-shadow: var(--shadow);
     }
+
     audio {
-      margin-top: 20px;
+      margin-top: 1rem;
     }
-    /* Clicker Game Styles */
-    #game {
-      margin-top: 50px;
-      background: rgba(255, 255, 255, 0.7);
-      padding: 30px;
+
+    .game-wrapper {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 1.5rem;
       border-radius: 20px;
-      box-shadow: 0 0 15px #d6336c;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
+      box-shadow: var(--shadow);
+      max-width: 420px;
+      margin: 3rem auto;
     }
-    #game h2 {
-      color: #d6336c;
-      margin-bottom: 15px;
-      font-size: 2em;
+
+    .game-wrapper h2 {
+      color: var(--pink);
+      margin-bottom: 1rem;
+      font-size: 1.75rem;
     }
+
     #clickButton {
-      padding: 20px 40px;
-      font-size: 1.8em;
-      background-color: #d6336c;
+      padding: 1rem 2.5rem;
+      font-size: 1.25rem;
+      background-color: var(--pink);
       border: none;
       border-radius: 15px;
       color: white;
       cursor: pointer;
       user-select: none;
-      box-shadow: 0 5px 15px #b12a58;
-      transition: background-color 0.3s;
+      box-shadow: var(--shadow);
+      transition: all 0.2s ease-in-out;
     }
+
     #clickButton:hover {
-      background-color: #a5294a;
+      background-color: #b12a58;
+      transform: scale(1.05);
     }
-    #score, #timer {
-      font-size: 1.6em;
-      margin-top: 20px;
+
+    #clickButton:active {
+      transform: scale(0.95);
+    }
+
+    #score, #timer, #message, #heartsScore {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: var(--dark-pink);
       font-weight: bold;
-      color: #6f1d3f;
     }
-    #message {
-      margin-top: 30px;
-      font-size: 1.4em;
-      color: #6f1d3f;
-      min-height: 40px;
-    }
-    /* Hearts Game Styles */
-    #heartsGameContainer {
-      margin: 60px auto 30px auto;
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 20px;
-      max-width: 420px;
-      box-shadow: 0 0 15px #d6336c;
-      padding: 20px;
-    }
-    #heartsGameContainer h2 {
-      color: #d6336c;
-      margin-bottom: 15px;
-      font-size: 2em;
-    }
+
     canvas {
       background: #fff0f2;
       display: block;
       margin: 0 auto;
       border-radius: 15px;
-      box-shadow: 0 0 10px #d6336c;
+      box-shadow: var(--shadow);
     }
-    #heartsScore {
-      font-size: 1.5em;
-      margin-top: 15px;
-      color: #6f1d3f;
-      font-weight: bold;
-    }
+
     #instructions {
-      font-size: 1em;
+      font-size: 0.95rem;
       color: #a64a71;
-      margin-bottom: 15px;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      #clickButton {
+        width: 100%;
+      }
+
+      canvas {
+        width: 100% !important;
+        height: auto !important;
+      }
     }
   </style>
 </head>
 <body>
   <h1>🎉 Alles Gute zum 45ten Geburtstag, Mama! 🎉</h1>
-  <p>Danke, dass du immer für mich da bist.<br>
-  Wir lieben dich unendlich und wünschen dir einen wunderschönen Geburtstag! 💐<br>
-  Du bist die Beste – für immer! ❤️</p>
+  <p>Danke, dass du immer für mich da bist.<br>Wir lieben dich unendlich 💖</p>
 
   <img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="Happy Birthday GIF" />
-
   <audio autoplay loop>
     <source src="https://cdn.pixabay.com/audio/2023/05/23/audio_b3ad84f865.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Clicker Mini-Game -->
-  <div id="game">
-    <h2>Clicker Mini-Game für Mama 🎮</h2>
+  <!-- Clicker Game -->
+  <div class="game-wrapper" id="clickerGame">
+    <h2>Clicker Game 🎮</h2>
     <p>Klicke so oft du kannst in 10 Sekunden!</p>
     <button id="clickButton">Klick mich!</button>
     <div id="score">Punkte: 0</div>
@@ -130,16 +136,16 @@
     <div id="message"></div>
   </div>
 
-  <!-- Hearts Shake.io-Style Game -->
-  <div id="heartsGameContainer">
+  <!-- Hearts Game -->
+  <div class="game-wrapper" id="heartsGameContainer">
     <h2>Herzen Sammel-Spiel ❤️</h2>
-    <p id="instructions">Steuere den Kasten mit Pfeil links/rechts und sammle Herzen ein!</p>
+    <p id="instructions">Steuere mit ← → und sammle Herzen ein!</p>
     <canvas id="heartsGame" width="400" height="300"></canvas>
     <div id="heartsScore">Herzen gesammelt: 0</div>
   </div>
 
   <script>
-    // Clicker Game Code
+    // Clicker Game
     const button = document.getElementById('clickButton');
     const scoreDisplay = document.getElementById('score');
     const timerDisplay = document.getElementById('timer');
@@ -153,20 +159,19 @@
     function startClickerGame() {
       score = 0;
       timeLeft = 10;
+      button.disabled = false;
+      gameActive = true;
       scoreDisplay.textContent = 'Punkte: 0';
       timerDisplay.textContent = 'Zeit: 10 Sekunden';
       message.textContent = '';
-      button.disabled = false;
-      gameActive = true;
 
       timerInterval = setInterval(() => {
         timeLeft--;
         timerDisplay.textContent = `Zeit: ${timeLeft} Sekunden`;
-
         if (timeLeft <= 0) {
           clearInterval(timerInterval);
-          gameActive = false;
           button.disabled = true;
+          gameActive = false;
           message.textContent = `Zeit ist vorbei! Du hast ${score} Klicks geschafft! 🎉`;
         }
       }, 1000);
@@ -180,7 +185,7 @@
       scoreDisplay.textContent = `Punkte: ${score}`;
     });
 
-    // Hearts Shake.io-Style Game Code
+    // Hearts Game
     const canvas = document.getElementById('heartsGame');
     const ctx = canvas.getContext('2d');
 
@@ -189,17 +194,16 @@
       y: canvas.height - 40,
       width: 50,
       height: 20,
-      speed: 7,
+      speed: 6,
       dx: 0,
     };
 
     const heartImg = new Image();
-    heartImg.src = 'https://i.postimg.cc/7Y6ZVrrY/heart.png'; // cute heart icon (transparent)
+    heartImg.src = 'https://i.postimg.cc/7Y6ZVrrY/heart.png';
 
     let hearts = [];
     let heartsCollected = 0;
     let heartsSpeed = 3;
-    let gameRunning = true;
 
     function createHeart() {
       const x = Math.random() * (canvas.width - 30);
@@ -226,14 +230,12 @@
 
     function movePlayer() {
       player.x += player.dx;
-      // Grenzen prüfen
       if (player.x < 0) player.x = 0;
       if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
     }
 
     function moveHearts() {
       hearts.forEach(h => h.y += heartsSpeed);
-      // Herzen, die unten raus sind, entfernen
       hearts = hearts.filter(h => h.y < canvas.height + 30);
     }
 
@@ -252,41 +254,26 @@
       });
     }
 
-    function clear() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
     function update() {
-      if (!gameRunning) return;
-
-      clear();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawPlayer();
       drawHearts();
       movePlayer();
       moveHearts();
       checkCollision();
-
       requestAnimationFrame(update);
     }
 
-    // Steuerung mit Pfeiltasten
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') {
-        player.dx = -player.speed;
-      } else if (e.key === 'ArrowRight') {
-        player.dx = player.speed;
-      }
+      if (e.key === 'ArrowLeft') player.dx = -player.speed;
+      else if (e.key === 'ArrowRight') player.dx = player.speed;
     });
 
     document.addEventListener('keyup', (e) => {
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        player.dx = 0;
-      }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') player.dx = 0;
     });
 
-    // Hearts spawnen alle 1,2 Sekunden
     setInterval(createHeart, 1200);
-
     update();
   </script>
 </body>
