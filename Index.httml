@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Alles Gute zum Geburtstag, Mama ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #ffb6c1, #ffc0cb);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: #fff;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.5em;
+    }
+    img {
+      margin-top: 30px;
+      width: 250px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px white;
+    }
+    audio {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Alles Gute zum Geburtstag, Mama! 🎉</h1>
+  <p>Ich liebe dich über alles. Danke für alles, was du für mich getan hast.  
+  Heute ist dein Tag – genieß ihn in vollen Zügen! ❤️</p>
+  
+  <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" alt="Feiernde Katze">
+
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2023/05/23/audio_b3ad84f865.mp3" type="audio/mpeg">
+    Die webseite unterstützt kein Audio 😢
+  </audio>
+</body>
+</html>
