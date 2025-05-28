@@ -269,27 +269,24 @@
       requestAnimationFrame(update);
     }
 
-    // Steuern mit Pfeiltasten
-    document.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') {
-        player.dx = player.speed;
-      } else if (e.key === 'ArrowLeft') {
+    // Steuerung mit Pfeiltasten
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
         player.dx = -player.speed;
+      } else if (e.key === 'ArrowRight') {
+        player.dx = player.speed;
       }
     });
 
-    document.addEventListener('keyup', e => {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    document.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         player.dx = 0;
       }
     });
 
-    // Neue Herzen alle 1.2 Sekunden spawnen
-    setInterval(() => {
-      if (gameRunning) createHeart();
-    }, 1200);
+    // Hearts spawnen alle 1,2 Sekunden
+    setInterval(createHeart, 1200);
 
-    // Starten
     update();
   </script>
 </body>
