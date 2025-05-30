@@ -1,4 +1,4 @@
-# 🎂 Alles Gute zum Geburtstag, Mama! 🎉
+Die seite ist privat # 🎂 Alles Gute zum Geburtstag, Mama! 🎉
 
 Dies ist eine kleine Überraschungs-Webseite, die ich für meine Mama zum Geburtstag gemacht habe.  
 Sie zeigt eine liebe Nachricht, ein süßes GIF und spielt fröhliche Musik. ❤️
